@@ -256,8 +256,13 @@ Plugins can extend functionality at these hooks:
 2. **Respect tech stack**: Use configured frameworks and libraries
 3. **Maintain consistency**: Ensure data models and API calls are consistent across platforms
 4. **Platform idioms**: Follow each platform's best practices and conventions
-5. **Incremental updates**: Only regenerate changed parts using cache
-6. **Preserve user content**: Content marked with `<!-- user-content -->` must not be overwritten
+5. **Protocol Retention**: 
+   - If requirement/legacy uses **gRPC**:
+     - **Supported Platforms** (iOS, Android, Windows, macOS, Flutter): **MUST use gRPC** to maintain high performance and type safety.
+     - **Restricted Platforms** (Mini Programs, H5): **Fallback to HTTP/JSON** (via Envoy/Gateway).
+   - If requirement uses REST/GraphQL: Use standard HTTP clients.
+6. **Incremental updates**: Only regenerate changed parts using cache
+7. **Preserve user content**: Content marked with `<!-- user-content -->` must not be overwritten
 
 ### Code Quality Standards:
 - Follow platform-specific coding guidelines

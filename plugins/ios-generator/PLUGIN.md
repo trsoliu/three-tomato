@@ -18,7 +18,7 @@
 | Language | Swift, Objective-C | Swift |
 | Architecture | MVVM, VIPER, Clean, TCA | MVVM |
 | UI | SwiftUI, UIKit, Hybrid | SwiftUI |
-| Network | Alamofire, URLSession, Moya | Alamofire |
+| Network | Alamofire, URLSession, Moya, gRPC-Swift | Alamofire |
 | Image | Kingfisher, SDWebImage, Nuke | Kingfisher |
 | Database | Core Data, Realm, GRDB | Core Data |
 | Async | Combine, RxSwift, async/await | Combine |
@@ -91,18 +91,31 @@ When generating iOS code:
    ```
 
    **API Client**:
+   
+   *Option A: HTTP/REST (Default)*
    ```swift
    protocol APIClientProtocol {
        func request<T: Decodable>(_ endpoint: APIEndpoint) async throws -> T
    }
+   // ... implementation
+   ```
+
+   *Option B: gRPC (If specified or legacy used gRPC)*
+   ```swift
+   import GRPC
+   import NIO
    
-   final class APIClient: APIClientProtocol {
-       private let session: URLSession
-       private let baseURL: URL
+   final class GRPCClient {
+       private let channel: ClientConnection
        
-       func request<T: Decodable>(_ endpoint: APIEndpoint) async throws -> T {
-           // Implementation
+       init(host: String, port: Int) {
+           let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+           self.channel = ClientConnection.insecure(group: group)
+               .connect(host: host, port: port)
        }
+       
+       // Expose services
+       lazy var artistService = ArtistService_ServiceClient(channel: channel)
    }
    ```
 
