@@ -1,6 +1,8 @@
-# Three-Tomato Skill
+# Three-Tomato
 
-> 将需求文档转换为多端原生开发代码：Android、iOS、鸿蒙、小程序、快应用、H5、Web、Mac、Windows
+将需求文档转换为多端**原生**开发代码，支持 Android、iOS、鸿蒙、小程序、快应用、H5、Web、macOS、Windows 等 17 个平台。
+
+> **核心原则**：原生优先，AI 友好技术栈（数据集大、文档丰富）
 
 ## Overview
 
