@@ -1,0 +1,355 @@
+# Three-Tomato Plugin Registry
+# 三番茄多端转换器插件注册表
+# 原生开发优先，AI 友好技术栈
+
+version: "1.0.0"
+
+# 插件配置
+plugins:
+  # ==================== 原生平台生成器插件 ====================
+  
+  android-generator:
+    name: "Android Generator"
+    description: "Android 原生代码生成 (Kotlin + Jetpack Compose)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: android
+      language: kotlin
+      ui: compose
+      
+  ios-generator:
+    name: "iOS Generator"
+    description: "iOS 原生代码生成 (Swift + SwiftUI)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: ios
+      language: swift
+      ui: swiftui
+      
+  harmony-generator:
+    name: "HarmonyOS Generator"
+    description: "鸿蒙原生代码生成 (ArkTS + ArkUI)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: harmony
+      language: arkts
+      
+  wechat-mp-generator:
+    name: "WeChat Mini Program Generator"
+    description: "微信小程序原生代码生成 (TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: wechat-mp
+      language: typescript
+      
+  alipay-mp-generator:
+    name: "Alipay Mini Program Generator"
+    description: "支付宝小程序原生代码生成 (TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: alipay-mp
+      language: typescript
+      
+  baidu-mp-generator:
+    name: "Baidu Smart Mini Program Generator"
+    description: "百度智能小程序原生代码生成 (TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: baidu-mp
+      language: typescript
+      
+  quick-app-generator:
+    name: "Quick App Generator"
+    description: "快应用代码生成 (TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: quick-app
+      language: typescript
+      
+  h5-generator:
+    name: "H5 Mobile Generator"
+    description: "H5 移动端代码生成 (React + TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: h5
+      framework: react
+      language: typescript
+      
+  web-generator:
+    name: "Web Desktop Generator"
+    description: "Web 桌面端代码生成 (Next.js + React + TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: web
+      framework: nextjs
+      language: typescript
+      
+  macos-generator:
+    name: "macOS Generator"
+    description: "macOS 原生代码生成 (Swift + SwiftUI)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: macos
+      language: swift
+      ui: swiftui
+      
+  windows-generator:
+    name: "Windows Generator"
+    description: "Windows 原生代码生成 (C# + WinUI 3)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: windows
+      language: csharp
+      ui: winui3
+
+  # ==================== 跨端框架插件 ====================
+  
+  flutter-generator:
+    name: "Flutter Generator"
+    description: "Flutter 跨端代码生成 (Dart)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: flutter
+      language: dart
+      state: riverpod
+      
+  rn-generator:
+    name: "React Native Generator"
+    description: "React Native 跨端代码生成 (TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: react-native
+      language: typescript
+      
+  uni-app-generator:
+    name: "Uni-app Generator"
+    description: "Uni-app 跨端代码生成 (Vue 3 + TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: uni-app
+      framework: vue3
+      
+  taro-generator:
+    name: "Taro Generator"
+    description: "Taro 跨端代码生成 (React + TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: taro
+      framework: react
+      
+  electron-generator:
+    name: "Electron Generator"
+    description: "Electron 桌面应用生成 (React + TypeScript)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: electron
+      framework: react
+      
+  tauri-generator:
+    name: "Tauri Generator"
+    description: "Tauri 桌面应用生成 (Rust + React)"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      output_dir: tauri
+      frontend: react
+      backend: rust
+
+  # ==================== 工具类插件 ====================
+  
+  api-sync:
+    name: "API Sync"
+    description: "Synchronize API definitions and clients across all platforms"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - after_analyze
+      - after_generate
+    config:
+      auto_sync: true
+      formats:
+        - openapi
+        - typescript
+        - kotlin
+        - swift
+      
+  ui-converter:
+    name: "UI Converter"
+    description: "Convert UI components and styles between platforms"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_generate
+    config:
+      source_format: figma
+      preserve_animations: true
+      
+  i18n-sync:
+    name: "i18n Sync"
+    description: "Synchronize internationalization resources across platforms"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - after_generate
+    config:
+      default_locale: zh-CN
+      locales:
+        - zh-CN
+        - en
+      formats:
+        android: xml
+        ios: strings
+        wechat-mp: json
+        h5: json
+        
+  diff-report:
+    name: "Diff Report"
+    description: "Generate platform comparison and difference reports"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_export
+    config:
+      format: markdown
+      include_code_samples: true
+      
+  migration-guide:
+    name: "Migration Guide"
+    description: "Generate migration guides between platforms"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_export
+    config:
+      detailed: true
+      
+  test-generator:
+    name: "Test Generator"
+    description: "Generate unit tests and integration tests for each platform"
+    version: "1.0.0"
+    enabled: false
+    builtin: true
+    hooks:
+      - after_generate
+    config:
+      coverage_target: 80
+      include_e2e: false
+      
+  doc-generator:
+    name: "Documentation Generator"
+    description: "Generate API documentation and developer guides"
+    version: "1.0.0"
+    enabled: true
+    builtin: true
+    hooks:
+      - on_export
+    config:
+      format: markdown
+      include_examples: true
+
+# Hook 执行顺序
+hook_order:
+  before_analyze:
+    - api-sync
+  after_analyze:
+    - api-sync
+  before_generate: []
+  on_generate:
+    - android-generator
+    - ios-generator
+    - harmony-generator
+    - wechat-mp-generator
+    - alipay-mp-generator
+    - baidu-mp-generator
+    - quick-app-generator
+    - h5-generator
+    - web-generator
+    - macos-generator
+    - windows-generator
+    - flutter-generator
+    - rn-generator
+    - uni-app-generator
+    - taro-generator
+    - electron-generator
+    - tauri-generator
+    - ui-converter
+  after_generate:
+    - api-sync
+    - i18n-sync
+    - test-generator
+  on_export:
+    - diff-report
+    - migration-guide
+    - doc-generator

@@ -1,0 +1,81 @@
+{
+  "name": "three-tomato",
+  "version": "1.0.0",
+  "description": "将需求文档转换为多端原生开发代码：Android、iOS、鸿蒙、小程序、快应用、H5、Web、Mac、Windows",
+  "author": "trsoliu",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/trsoliu/three-tomato",
+  "keywords": [
+    "multi-platform",
+    "native-development",
+    "android",
+    "ios",
+    "harmonyos",
+    "wechat-miniprogram",
+    "alipay-miniprogram",
+    "baidu-miniprogram",
+    "quick-app",
+    "h5",
+    "web",
+    "macos",
+    "windows",
+    "code-generator",
+    "ai-friendly"
+  ],
+  "main": "SKILL.md",
+  "files": [
+    "SKILL.md",
+    "SKILL.zh.md",
+    "assets/",
+    "docs/",
+    "plugins/",
+    "references/",
+    "scripts/"
+  ],
+  "triggers": [
+    "transform to",
+    "generate * code",
+    "convert requirement",
+    "create platform specs",
+    "转换为",
+    "生成多端",
+    "生成*代码",
+    "多端转换"
+  ],
+  "platforms": [
+    "android",
+    "ios",
+    "harmony",
+    "wechat-mp",
+    "alipay-mp",
+    "baidu-mp",
+    "quick-app",
+    "h5",
+    "web",
+    "macos",
+    "windows",
+    "flutter",
+    "react-native",
+    "uni-app",
+    "taro",
+    "electron",
+    "tauri"
+  ],
+  "dependencies": {
+    "python": ">=3.8",
+    "pyyaml": ">=6.0"
+  },
+  "hooks": {
+    "before_analyze": "scripts/hooks/before_analyze.py",
+    "after_analyze": "scripts/hooks/after_analyze.py",
+    "before_generate": "scripts/hooks/before_generate.py",
+    "on_generate": "scripts/hooks/on_generate.py",
+    "after_generate": "scripts/hooks/after_generate.py",
+    "on_export": "scripts/hooks/on_export.py"
+  },
+  "config": {
+    "default_output": ".three-tomato",
+    "default_language": "zh-CN",
+    "cache_enabled": true
+  }
+}

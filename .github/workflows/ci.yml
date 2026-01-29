@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml
+
+      - name: Validate skill manifest
+        run: |
+          python -c "
+          import json
+          with open('three-tomato.skill', 'r') as f:
+              data = json.load(f)
+          print('✅ Skill manifest is valid JSON')
+          required_fields = ['name', 'version', 'description', 'main', 'platforms']
+          for field in required_fields:
+              assert field in data, f'Missing required field: {field}'
+          print('✅ All required fields present')
+          print(f'   Name: {data[\"name\"]}')
+          print(f'   Version: {data[\"version\"]}')
+          print(f'   Platforms: {len(data[\"platforms\"])}')
+          "
+
+      - name: Validate plugin registry
+        run: |
+          python -c "
+          import yaml
+          with open('plugins/_registry.yaml', 'r') as f:
+              data = yaml.safe_load(f)
+          print('✅ Plugin registry is valid YAML')
+          plugins = data.get('plugins', {})
+          print(f'   Total plugins: {len(plugins)}')
+          "
+
+      - name: Validate config template
+        run: |
+          python -c "
+          import yaml
+          with open('assets/config.template.yaml', 'r') as f:
+              data = yaml.safe_load(f)
+          print('✅ Config template is valid YAML')
+          "
+
+      - name: Check documentation
+        run: |
+          for file in SKILL.md README.md README.zh.md; do
+            if [ -f "$file" ]; then
+              echo "✅ $file exists"
+            else
+              echo "❌ $file missing"
+              exit 1
+            fi
+          done

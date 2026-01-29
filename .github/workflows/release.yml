@@ -1,0 +1,81 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          # Extract changelog section for this version
+          awk "/## \[${VERSION}\]/{flag=1; next} /## \[/{flag=0} flag" CHANGELOG.md > release_notes.md
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_OUTPUT
+          cat release_notes.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create skill package
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+          PACKAGE_NAME="three-tomato-v${VERSION}"
+          
+          # Create package directory
+          mkdir -p dist/${PACKAGE_NAME}
+          
+          # Copy skill files
+          cp -r SKILL.md SKILL.zh.md three-tomato.skill dist/${PACKAGE_NAME}/
+          cp -r assets plugins references scripts docs dist/${PACKAGE_NAME}/
+          cp README.md README.zh.md LICENSE CHANGELOG.md dist/${PACKAGE_NAME}/
+          
+          # Create tarball
+          cd dist
+          tar -czvf ${PACKAGE_NAME}.tar.gz ${PACKAGE_NAME}
+          
+          # Create zip
+          zip -r ${PACKAGE_NAME}.zip ${PACKAGE_NAME}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: v${{ steps.version.outputs.VERSION }}
+          body: |
+            ## 📦 安装
+            
+            ```bash
+            npx skills add trsoliu/three-tomato
+            ```
+            
+            或下载下方附件手动安装。
+            
+            ---
+            
+            ${{ steps.changelog.outputs.RELEASE_NOTES }}
+          files: |
+            dist/three-tomato-v${{ steps.version.outputs.VERSION }}.tar.gz
+            dist/three-tomato-v${{ steps.version.outputs.VERSION }}.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

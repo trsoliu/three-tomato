@@ -1,0 +1,246 @@
+# Three-Tomato Configuration
+# 三番茄多端转换器配置文件
+# AI 友好技术栈 - 原生优先，数据集大
+
+# 项目基本信息
+project:
+  name: "my-app"
+  version: "1.0.0"
+  description: "项目描述"
+
+# 目标平台配置
+platforms:
+  # 启用的平台列表
+  enabled:
+    - android
+    - ios
+    - wechat-mp
+    - h5
+    - web
+  
+  # 平台优先级（用于解决冲突时的决策）
+  priority:
+    - android
+    - ios
+    - harmony
+    - wechat-mp
+    - alipay-mp
+    - baidu-mp
+    - quick-app
+    - h5
+    - web
+    - macos
+    - windows
+
+# ============================================
+# AI 友好技术栈配置（原生优先，数据集大）
+# ============================================
+tech_stack:
+  # Android 原生 - Kotlin AI 数据集大，Compose 声明式 UI
+  android:
+    language: kotlin              # kotlin (推荐，AI 友好)
+    min_sdk: 26
+    target_sdk: 34
+    architecture: mvvm            # mvvm (最成熟)
+    di: hilt                      # hilt (官方推荐)
+    network: retrofit             # retrofit + okhttp
+    image: coil                   # coil (Kotlin 优先)
+    database: room                # room (官方)
+    async: coroutines             # coroutines (Kotlin 原生)
+    ui: compose                   # compose (声明式，AI 友好)
+    
+  # iOS 原生 - Swift 现代语法，SwiftUI 声明式
+  ios:
+    language: swift               # swift (推荐，AI 友好)
+    min_ios: "16.0"
+    architecture: mvvm
+    ui: swiftui                   # swiftui (声明式，AI 友好)
+    network: urlsession           # 原生优先，避免依赖
+    image: native                 # AsyncImage 原生
+    database: swiftdata           # swiftdata (新) | coredata
+    async: async-await            # Swift 原生 async/await
+    package_manager: spm
+    
+  # 鸿蒙 HarmonyOS - ArkTS 是 TypeScript 超集
+  harmony:
+    language: arkts               # TypeScript 超集，AI 熟悉
+    api_version: 12
+    ui: arkui
+    architecture: mvvm
+    network: http
+    database: preferences
+    
+  # 微信小程序 - TypeScript 原生开发
+  wechat-mp:
+    framework: native             # 原生开发，不用跨端框架
+    language: typescript          # TypeScript 类型安全
+    state: zustand                # 轻量状态管理
+    ui: weui                      # 官方 UI
+    cloud: false
+    
+  # 支付宝小程序 - TypeScript 原生开发
+  alipay-mp:
+    framework: native
+    language: typescript
+    ui: antd-mini
+    
+  # 百度智能小程序 - TypeScript 原生开发
+  baidu-mp:
+    framework: native
+    language: typescript
+    ui: swan-ui
+    
+  # 快应用 - TypeScript
+  quick-app:
+    min_platform: 1100
+    language: typescript
+    
+  # H5 移动端 - React 优先（数据集最大）
+  h5:
+    framework: react              # react 优先，AI 数据集最大
+    language: typescript
+    bundler: vite
+    ui: antd-mobile               # Ant Design Mobile
+    state: zustand                # 轻量，AI 友好
+    router: react-router
+    css: tailwindcss              # Tailwind，AI 友好
+    
+  # Web 桌面端 - Next.js + React（企业级首选）
+  web:
+    framework: react
+    meta_framework: nextjs        # Next.js SSR/SSG
+    language: typescript
+    bundler: turbopack            # Next.js 内置
+    ui: antd                      # Ant Design
+    ui_components: shadcn-ui      # 可选：shadcn/ui
+    state: zustand
+    css: tailwindcss
+    
+  # macOS 原生 - Swift + SwiftUI（Apple 生态）
+  macos:
+    language: swift
+    min_macos: "13.0"
+    ui: swiftui
+    architecture: mvvm
+    network: urlsession
+    database: swiftdata
+    
+  # Windows 原生 - C# + WinUI 3（.NET 生态）
+  windows:
+    language: csharp              # C# AI 数据集大
+    dotnet_version: "8.0"
+    ui: winui3                    # WinUI 3 现代 UI
+    architecture: mvvm
+    di: microsoft.extensions
+    database: sqlite              # SQLite + EF Core
+
+  # ============================================
+  # 跨端框架配置
+  # ============================================
+  
+  # Flutter - Dart + Riverpod
+  flutter:
+    dart_sdk: ">=3.0.0"
+    state: riverpod               # riverpod | bloc | provider
+    network: dio
+    router: go_router
+    
+  # React Native - TypeScript + Zustand
+  react-native:
+    version: "0.73"
+    language: typescript
+    state: zustand                # zustand | redux | mobx
+    navigation: react-navigation
+    ui: paper                     # paper | elements | native-base
+    
+  # Uni-app - Vue 3 + TypeScript
+  uni-app:
+    vue_version: 3
+    language: typescript
+    state: pinia
+    ui: uni-ui
+    compiler: vite
+    
+  # Taro - React + TypeScript
+  taro:
+    version: 3
+    framework: react              # react | vue3
+    language: typescript
+    state: zustand
+    ui: nutui
+    
+  # Electron - React + TypeScript
+  electron:
+    frontend: react
+    language: typescript
+    build: electron-vite
+    ui: antd
+    state: zustand
+    
+  # Tauri - Rust + React
+  tauri:
+    backend: rust
+    frontend: react
+    language: typescript
+    build: vite
+    ui: shadcn-ui
+    css: tailwindcss
+
+# 输出配置
+output:
+  directory: .three-tomato/output
+  include_tests: true
+  include_docs: true
+  include_comments: true
+  language: zh-CN
+  
+# API 配置
+api:
+  base_url: "https://api.example.com"
+  version: "v1"
+  auth_type: jwt
+  spec_file: requirements/api.yaml
+  
+# 代码风格
+code_style:
+  indent: 2
+  max_line_length: 120
+  trailing_comma: true
+  single_quote: true
+  
+# 功能开关
+features:
+  dark_mode: true
+  i18n: true
+  analytics: true
+  crash_reporting: true
+  push_notification: false
+  offline_mode: false
+  
+# 缓存配置
+cache:
+  enabled: true
+  directory: .three-tomato/cache
+  max_age_days: 7
+
+# 插件配置
+plugins:
+  enabled:
+    - android-generator
+    - ios-generator
+    - harmony-generator
+    - wechat-mp-generator
+    - alipay-mp-generator
+    - baidu-mp-generator
+    - quick-app-generator
+    - h5-generator
+    - web-generator
+    - macos-generator
+    - windows-generator
+    - api-sync
+    - diff-report
+  config:
+    api-sync:
+      auto_sync: true
+    diff-report:
+      format: markdown
