@@ -1,3 +1,9 @@
+---
+name: three-tomato
+description: 将需求文档转换为多端原生开发代码，支持 Android、iOS、鸿蒙、小程序、快应用、H5、Web、macOS、Windows 等 17 个平台。原生优先，AI 友好技术栈。
+license: MIT
+---
+
 # Three-Tomato
 
 将需求文档转换为多端**原生**开发代码，支持 Android、iOS、鸿蒙、小程序、快应用、H5、Web、macOS、Windows 等 17 个平台。
