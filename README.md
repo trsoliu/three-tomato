@@ -2,6 +2,13 @@
   <img src="./assets/images/three-tomato-logo-color.svg" alt="Three-Tomato Logo" width="200">
 </p>
 
+<p align="center">
+  <a href="https://skills.sh"><img src="https://img.shields.io/badge/SKILLS.SH-COMPATIBLE-007EC6?style=flat-square" alt="Skills.sh Compatible"></a>
+  <img src="https://img.shields.io/badge/VERSION-1.0.0-00B2A9?style=flat-square" alt="Version 1.0.0">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-4c1?style=flat-square" alt="License MIT"></a>
+  <a href="https://github.com/trsoliu/three-tomato"><img src="https://img.shields.io/github/stars/trsoliu/three-tomato?style=flat-square&label=STARS&color=EAC54F" alt="Stars"></a>
+</p>
+
 # Three-Tomato 三个番茄
 
 > 将需求文档转换为多端原生开发代码：Android、iOS、鸿蒙、小程序、快应用、H5、Web、Mac、Windows 🚀
