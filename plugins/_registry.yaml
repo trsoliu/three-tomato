@@ -2,7 +2,7 @@
 # 三番茄多端转换器插件注册表
 # 原生开发优先，AI 友好技术栈
 
-version: "1.0.0"
+version: "1.0.1"
 
 # 插件配置
 plugins:
@@ -24,7 +24,7 @@ plugins:
   ios-generator:
     name: "iOS Generator"
     description: "iOS 原生代码生成 (Swift + SwiftUI)"
-    version: "1.0.0"
+    version: "1.0.1"
     enabled: true
     builtin: true
     hooks:

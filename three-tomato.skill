@@ -1,6 +1,6 @@
 {
   "name": "three-tomato",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "将需求文档转换为多端原生开发代码：Android、iOS、鸿蒙、小程序、快应用、H5、Web、Mac、Windows",
   "author": "trsoliu",
   "license": "MIT",

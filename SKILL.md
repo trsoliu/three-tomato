@@ -286,6 +286,6 @@ Plugins can extend functionality at these hooks:
 
 ## Version
 
-- Skill Version: 1.0.0
-- Last Updated: 2025-01-29
+- Skill Version: 1.0.1
+- Last Updated: 2026-01-30
 - Author: three-tomato

@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-01-30
+
+### 📱 iOS Generator Updates
+- Updated code generation templates for iOS (Swift + SwiftUI).
+- Refined project structure layout for generated iOS projects.
+- Better support for dependency management via SPM.
+
+### 🔧 Core Skill Updates
+- Updated guide for gRPC usage: Enforced gRPC for native platforms while using HTTP/JSON fallback for Mini Programs/Web.
+- Revised `SKILL.md` instructions for clarity.
+
 ## [1.0.0] - 2026-01-29
 
 ### 🎉 Initial Release
