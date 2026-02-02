@@ -44,6 +44,7 @@ This skill enables AI Agents to analyze requirement documents and generate **nat
 
 ## Trigger Commands
 
+### Code Generation
 ```
 🤖 "transform to [platform]"
 🤖 "generate [platform] code"
@@ -53,7 +54,41 @@ This skill enables AI Agents to analyze requirement documents and generate **nat
 🤖 "生成多端代码"
 ```
 
+### Self-Evolution
+```
+🧬 "3T evolve" / "3T 总结归纳进化"
+🧬 "3T log issue [description]" / "3T 记录问题 [描述]"
+🧬 "3T show evolution log" / "3T 查看进化日志"
+```
+
 ## Workflow
+
+### Evolution Workflow (3T evolve / 3T 总结归纳进化)
+
+When `3T evolve` command is triggered, AI Agent executes:
+
+#### Step 1: Collect Feedback
+1. Scan `.three-tomato/feedback/issues/` for issue records
+2. Analyze compile/runtime errors in `.three-tomato/output/`
+3. Identify patterns from user's manual code fixes
+
+#### Step 2: Categorize Issues
+1. Group by platform (Android/iOS/Mini Programs, etc.)
+2. Group by type (syntax error/API changes/best practices/architecture)
+3. Calculate issue frequency
+
+#### Step 3: Update Knowledge
+1. Update `references/patterns/known-issues.yaml` - known issues database
+2. Update `references/patterns/best-practices.yaml` - best practices
+3. Update platform-specific `plugins/[platform]-generator/PLUGIN.md`
+4. Log changes to `.three-tomato/evolution/changelog.md`
+
+#### Step 4: Validate Improvements
+1. Generate test cases for high-frequency issues
+2. Verify improved templates resolve the issues
+3. Output evolution report to `.three-tomato/evolution/reports/`
+
+---
 
 ### Phase 1: Requirement Analysis
 1. Read requirement document from `.three-tomato/requirements/` or specified path

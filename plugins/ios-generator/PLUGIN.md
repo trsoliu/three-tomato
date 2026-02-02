@@ -100,24 +100,52 @@ When generating iOS code:
    // ... implementation
    ```
 
-   *Option B: gRPC (If specified or legacy used gRPC)*
-   ```swift
-   import GRPC
-   import NIO
+   *Option B: gRPC/Protobuf via JSON Transcoding (推荐)*
    
-   final class GRPCClient {
-       private let channel: ClientConnection
+   **Rules**:
+   1. **直接使用生成的类型**：不要在 pb.swift 基础上手写复杂封装层
+   2. **Source of Truth**: 使用 `.proto` 文件从遗留项目或指定路径
+   3. **Generation Strategy**:
+      - Copy `.proto` files to `Core/Network/Proto/Definitions`
+      - Create `generate_protos.sh` using `protoc --swift_out`
+      - Add `SwiftProtobuf` dependency via SPM
+   
+   **简洁 APIClient 模式** (避免 IOS-001/002 问题):
+   ```swift
+   import Foundation
+   import SwiftProtobuf
+   
+   class APIClient {
+       static let shared = APIClient()
+       private let baseURL = "https://api.quanku.art"
        
-       init(host: String, port: Int) {
-           let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-           self.channel = ClientConnection.insecure(group: group)
-               .connect(host: host, port: port)
+       func call<Req: SwiftProtobuf.Message, Res: SwiftProtobuf.Message>(
+           service: String, method: String, request: Req
+       ) async throws -> Res {
+           let url = URL(string: "\(baseURL)/\(service)/\(method)")!
+           var urlRequest = URLRequest(url: url)
+           urlRequest.httpMethod = "POST"
+           urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+           urlRequest.httpBody = try request.jsonUTF8Data()  // SwiftProtobuf 方法
+           
+           let (data, _) = try await URLSession.shared.data(for: urlRequest)
+           return try Res(jsonUTF8Data: data)  // SwiftProtobuf 方法
        }
        
-       // Expose services
-       lazy var artistService = ArtistService_ServiceClient(channel: channel)
+       // 业务方法直接使用生成的类型
+       func getArtist(id: String) async throws -> Cag2_Artist {
+           var req = Cag2_GetReq()
+           req.id = id
+           return try await call(service: "cag2.ArtistService", method: "get", request: req)
+       }
    }
    ```
+   
+   **⚠️ 已知问题提醒** (see known-issues.yaml):
+   - IOS-001: 不要过度封装，直接用生成类型
+   - IOS-002: 用 `jsonUTF8Data()` 而非 `JSONEncoder`
+   - IOS-003: 确保 pb.swift 加入 Sources build phase
+   - IOS-004: 检查生成代码的实际属性名
 
    **Service Layer**:
    ```swift

@@ -1,0 +1,41 @@
+# 问题记录模板
+# 文件名格式: YYYY-MM-DD-NNN.yaml (如: 2026-01-30-001.yaml)
+
+# 基本信息
+date: 2026-01-30
+platform: android  # android/ios/harmony/wechat-mp/alipay-mp/h5/web/flutter/...
+severity: medium   # low/medium/high/critical
+
+# 问题分类
+category: syntax   # syntax(语法)/api(API变更)/practice(最佳实践)/architecture(架构)/runtime(运行时)
+
+# 问题描述
+title: "简短标题"
+description: |
+  详细描述问题是什么，如何复现
+
+# 生成的错误代码（可选）
+error_code: |
+  // 这里粘贴生成的有问题的代码
+
+# 正确的代码（你修复后的代码）
+fixed_code: |
+  // 这里粘贴修复后的代码
+
+# 根因分析（可选）
+root_cause: |
+  为什么会生成错误的代码？是模板问题还是逻辑问题？
+
+# 建议的改进
+suggested_fix: |
+  建议如何改进 SKILL 或插件来避免这个问题
+
+# 关联的文件（可选）
+related_files:
+  - plugins/android-generator/PLUGIN.md
+  - references/templates/android/
+
+# 标签
+tags:
+  - compose
+  - viewmodel

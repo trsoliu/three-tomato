@@ -1,0 +1,71 @@
+# Three-Tomato 已知问题库
+# 此文件由 "3T 总结归纳进化" 命令自动更新
+# 生成代码时 AI Agent 会检查此文件以避免重复问题
+
+version: "1.0.0"
+last_updated: 2026-01-30
+
+# 问题按平台组织
+platforms:
+
+  android:
+    # - id: ANDROID-001
+    #   title: "Compose 中 remember 使用不当"
+    #   description: "在 Composable 外部使用 remember 导致编译错误"
+    #   pattern: "remember { } outside @Composable"
+    #   fix: "确保 remember 只在 @Composable 函数内部使用"
+    #   frequency: 0
+    #   added: 2026-01-30
+    []
+
+  ios:
+    - id: IOS-001
+      title: "SwiftProtobuf 过度封装导致类型混乱"
+      description: "在 protoc 生成的 pb.swift 基础上手写复杂封装层，导致协议不匹配和类型错误"
+      pattern: "protocol XXXServiceProtocol + class XXXServiceClient 手动封装"
+      fix: "直接使用生成的 pb.swift 类型，创建简洁的 APIClient 统一调用"
+      frequency: 1
+      added: 2026-01-30
+      
+    - id: IOS-002
+      title: "Codable 与 SwiftProtobuf.Message 协议冲突"
+      description: "错误地对 protobuf 类型使用 JSONEncoder/JSONDecoder，应使用 SwiftProtobuf 的方法"
+      pattern: "JSONEncoder().encode(protobufMessage)"
+      fix: "使用 message.jsonUTF8Data() 编码，使用 Message(jsonUTF8Data:) 解码"
+      frequency: 1
+      added: 2026-01-30
+      
+    - id: IOS-003
+      title: "pbxproj Sources Build Phase 缺少文件"
+      description: "pb.swift 文件在 PBXFileReference 中声明但未添加到 Sources build phase"
+      pattern: "找到文件引用但编译时报 'cannot find type' 错误"
+      fix: "确保所有 pb.swift 的 PBXBuildFile 都添加到 PBXSourcesBuildPhase.files 中"
+      frequency: 1
+      added: 2026-01-30
+      
+    - id: IOS-004
+      title: "Protobuf 属性名与预期不一致"
+      description: "protoc 生成的 Swift 属性名可能与 proto 定义不同（驼峰转换规则）"
+      pattern: "假设属性名为 artistID 但实际为 id"
+      fix: "查看生成的 pb.swift 源码确认实际属性名，使用 grep 搜索"
+      frequency: 1
+      added: 2026-01-30
+
+  harmony:
+    []
+
+  wechat-mp:
+    []
+
+  h5:
+    []
+
+  web:
+    []
+
+  flutter:
+    []
+
+# 跨平台通用问题
+common:
+  []

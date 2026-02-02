@@ -1,0 +1,119 @@
+# Three-Tomato 最佳实践库
+# 此文件由 "3T 总结归纳进化" 命令持续改进
+# 生成代码时 AI Agent 参考此文件确保代码质量
+
+version: "1.0.0"
+last_updated: 2026-01-30
+
+# 最佳实践按平台组织
+platforms:
+
+  android:
+    - id: BP-ANDROID-001
+      title: "使用 Hilt 进行依赖注入"
+      description: "所有 ViewModel 和 Repository 通过 Hilt 注入"
+      example: |
+        @HiltViewModel
+        class HomeViewModel @Inject constructor(
+            private val repository: HomeRepository
+        ) : ViewModel()
+
+  ios:
+    - id: BP-IOS-001
+      title: "使用 @MainActor 标记 ViewModel"
+      description: "确保 UI 更新在主线程执行"
+      example: |
+        @MainActor
+        final class HomeViewModel: ObservableObject {
+            @Published var state: HomeState = .idle
+        }
+    
+    - id: BP-IOS-002
+      title: "SwiftProtobuf 网络层简洁模式"
+      description: "使用 SwiftProtobuf.Message 的 JSON 方法，避免过度封装"
+      example: |
+        class APIClient {
+            func call<Req: SwiftProtobuf.Message, Res: SwiftProtobuf.Message>(
+                service: String, method: String, request: Req
+            ) async throws -> Res {
+                var urlRequest = URLRequest(url: URL(string: "\(baseURL)/\(service)/\(method)")!)
+                urlRequest.httpMethod = "POST"
+                urlRequest.httpBody = try request.jsonUTF8Data()
+                let (data, _) = try await URLSession.shared.data(for: urlRequest)
+                return try Res(jsonUTF8Data: data)
+            }
+        }
+    
+    - id: BP-IOS-003
+      title: "Protobuf 类型直接使用，不二次封装"
+      description: "生成的 Cag2_XXX 类型直接在 ViewModel 中使用，通过 extension 添加便捷方法"
+      example: |
+        extension WorkModel {
+            init(from proto: Cag2_Suha) {
+                self.id = proto.id
+                self.title = proto.name
+                self.thumbUrl = proto.thumbTileURL
+            }
+        }
+
+  harmony:
+    - id: BP-HARMONY-001
+      title: "使用 @State 装饰器管理状态"
+      description: "ArkUI 中使用装饰器实现响应式"
+      example: |
+        @Entry
+        @Component
+        struct HomePage {
+          @State message: string = 'Hello'
+        }
+
+  wechat-mp:
+    - id: BP-WECHAT-001
+      title: "使用 TypeScript 类型定义"
+      description: "为所有数据定义接口类型"
+      example: |
+        interface UserInfo {
+          id: string
+          nickname: string
+          avatar?: string
+        }
+
+  h5:
+    - id: BP-H5-001
+      title: "使用 React Query 管理服务端状态"
+      description: "避免手动管理 loading/error 状态"
+      example: |
+        const { data, isLoading } = useQuery({
+          queryKey: ['user', userId],
+          queryFn: () => fetchUser(userId)
+        })
+
+  web:
+    - id: BP-WEB-001
+      title: "Next.js 使用 Server Components"
+      description: "优先使用 RSC 减少客户端 JS"
+      example: |
+        // app/page.tsx (Server Component by default)
+        export default async function Page() {
+          const data = await fetchData()
+          return <div>{data.title}</div>
+        }
+
+  flutter:
+    - id: BP-FLUTTER-001
+      title: "使用 Riverpod 进行状态管理"
+      description: "声明式、类型安全的状态管理"
+      example: |
+        final userProvider = FutureProvider<User>((ref) async {
+          return ref.read(apiClientProvider).fetchUser();
+        });
+
+# 跨平台通用最佳实践
+common:
+  - id: BP-COMMON-001
+    title: "统一错误处理模式"
+    description: "所有平台使用一致的 Result/Either 模式处理错误"
+
+  - id: BP-COMMON-002
+    title: "保持数据模型一致"
+    description: "跨平台的数据模型字段名、类型应保持一致"

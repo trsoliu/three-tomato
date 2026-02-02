@@ -25,6 +25,7 @@
 
 ## 触发命令
 
+### 代码生成
 ```
 🤖 "转换为[平台]"
 🤖 "生成[平台]代码"
@@ -32,7 +33,41 @@
 🤖 "创建平台规范"
 ```
 
+### 自我进化
+```
+🧬 "3T 总结归纳进化"
+🧬 "3T 记录问题 [问题描述]"
+🧬 "3T 查看进化日志"
+```
+
 ## 工作流程
+
+### 进化流程（3T 总结归纳进化）
+
+当触发 `3T 总结归纳进化` 命令时，AI Agent 执行以下流程：
+
+#### 步骤1：收集反馈
+1. 扫描 `.three-tomato/feedback/issues/` 中的问题记录
+2. 分析 `.three-tomato/output/` 中生成代码的编译/运行错误
+3. 识别用户手动修改过的代码模式
+
+#### 步骤2：问题归类
+1. 按平台分类问题（Android/iOS/小程序等）
+2. 按类型分类（语法错误/API 变更/最佳实践/架构问题）
+3. 计算问题出现频率
+
+#### 步骤3：知识更新
+1. 更新 `references/patterns/known-issues.yaml` - 已知问题库
+2. 更新 `references/patterns/best-practices.yaml` - 最佳实践
+3. 更新对应平台的 `plugins/[platform]-generator/PLUGIN.md`
+4. 记录到 `.three-tomato/evolution/changelog.md`
+
+#### 步骤4：验证改进
+1. 对高频问题生成测试用例
+2. 验证改进后的模板是否解决问题
+3. 输出进化报告到 `.three-tomato/evolution/reports/`
+
+---
 
 ### 阶段1：需求分析
 1. 从 `.multi-platform/requirements/` 读取需求文档
